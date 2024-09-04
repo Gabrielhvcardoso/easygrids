@@ -1,0 +1,81 @@
+
+$panel_width  : 300px;
+$spacing : 12px;
+
+body {
+    margin: 0;
+    background-color: hsl(207, 15%, 12%);
+    color: rgb(201, 201, 201);
+}
+
+
+.container {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+
+    // Default Definitions and Small size
+
+    .viewer {
+        inset: 0 0 60% 0;
+        position: absolute;
+        padding: $spacing;
+        z-index: 1;
+        transition: .2s ease-out inset;
+    }
+    
+    .panel_backdrop {
+        display: none;
+    }
+
+    .panel {
+        inset: 40% $spacing $spacing $spacing;
+        position: absolute;
+        padding: $spacing;
+        z-index: 2;
+        transition: .2s ease-out inset;
+    }
+
+
+    // Medium size
+
+    @media (min-width: 768px) {
+        .viewer {
+            inset: 0 0 0 ($spacing * 3);
+        }
+
+        .panel_backdrop:has(+ .panel.visible) {
+            display: block;
+            position: absolute;
+            inset: 0;
+            background-color: green;
+            pointer-events: all;
+            z-index: 1;
+        }
+
+        .panel {
+            inset: $spacing auto $spacing ($panel_width * -1);
+            width: $panel_width;
+        
+            &.visible {
+                inset: $spacing auto $spacing 12px;
+            }
+        }
+    }
+
+    // Large size
+
+    @media (min-width: 1024px) {
+        .panel_backdrop {
+            display: none !important;
+        }
+
+        .panel {
+            inset: $spacing auto $spacing 12px;
+        }
+
+        .viewer {
+            inset: 0 0 0 ($panel_width + $spacing * 3);
+        }
+    }
+}
